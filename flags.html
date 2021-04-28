@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"> 
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Βρες τους γείτονες</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="countries.js" defer></script>
+    <script src="allcountries.js" defer></script>
+    <script defer>
+        // Ένας βοηθητικός πίνακας που θα περιέχει τις χώρες από το countries.js σε λίγο πιο βολική μορφή
+        //const allCountries = new Array();
+        
+        // πχ. allCountries['GRE'] = { code2: "GR", name: "Greece"}, ή κάτι παρόμοιο 
+        /*
+        countryObjects.forEach(country => {
+            //
+        })
+        */
+    
+        // Εδώ μπορείτε να βάλετε τον κώδικα για όλο το παιχνίδι
+        // Μπορείτε γράψετε κλάσεις που να έχουν κάποια συμπεριφορά, 
+        // π.χ. Game, PlayingCountry, Neighbour, ...
+        // ή να και ακολουθήσετε άλλη τακτική, που να σας είναι πιο προσιτή
+        
+
+        let c_giros = 1;
+        let c_skor = 0;
+        let ep;
+        let mycode ;
+        let r_tries = [];
+        let w_tries = [];
+        
+         
+        function refresh_score() {            
+            const divgiros = document.querySelector("#giros");
+            const divskor = document.querySelector("#skor");
+            divgiros.innerHTML = `${c_giros}`;
+            divskor.innerHTML = `${c_skor}`;
+        }
+
+        function fetch_mycountry() {
+                 findBorders();
+        }
+
+        function MyNewGame() {
+            document.querySelector("#next-round-panel").style.display = "none";
+            document.querySelector("#btn-next-round").disabled = true;
+            document.getElementById("infobox").style.display = "none";
+            document.getElementById("infobox2").style.display = "none";
+            document.getElementById("allScreen").style.display = "none";
+                r_tries = [];
+                w_tries = [];
+                c_giros = 1;
+                c_skor = 0;
+                document.querySelector("#myBar").style.width = 0 + "%";
+                refresh_score();
+                allPlayedCountries = [];
+                fetch_mycountry();
+        }
+
+
+        function MyCancel() {
+            //alert("cancel !!!!");
+            document.getElementById("infobox").style.display = "none";
+            document.getElementById("allScreen").style.display = "none";
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            //start a new Game  
+
+            c_giros = 1;
+            c_skor = 0;
+
+            refresh_score();
+            fetch_mycountry();
+            document.querySelector("#btn-next-round").disabled = true;
+            document.querySelector("#next-round-panel").style.display = "none";
+            document.getElementById("allScreen").style.display = "none";
+             
+            //event listener to new game button
+            document.querySelector("#btn-new-game").addEventListener("click", () => {
+                document.getElementById("infobox").style.display = "block";
+                document.getElementById("allScreen").style.display = "block";
+            })
+ 
+            //event listener to next round button
+            document.querySelector("#btn-next-round").addEventListener("click", () => {
+                document.querySelector("#next-round-panel").style.display = "none";
+                r_tries = [];
+                w_tries = [];
+                c_giros += 1;
+                if (c_giros == 11) {
+                    document.getElementById("infobox2").style.display = "block";
+                    document.getElementById("allScreen").style.display = "block";
+                }
+                document.querySelector("#myBar").style.width = 0 + "%";
+                refresh_score();
+                fetch_mycountry();
+                document.querySelector("#btn-next-round").disabled = true;
+            })
+
+            function round_success() {
+                document.querySelector("#next-round-panel").style.display = "flex";
+                const info = document.querySelector("#msg");
+                info.textContent = "Τους βρήκατε όλους!";
+                info.style.display = "flex";
+                info.style.color = "black";
+                document.querySelector("#btn-next-round").disabled = false;
+                refresh_score();
+            }
+
+            function round_failure(e) {
+                document.querySelector("#next-round-panel").style.display = "flex";
+                const info = document.querySelector("#msg");
+                info.textContent = "Kρίμα χάσατε!";
+                info.style.display = "flex";
+                info.style.color = "darkred"; 
+                document.querySelector("#btn-next-round").disabled = false;
+                refresh_score();
+            }
+
+            function clickHandler(e) {
+                let geitones = true_neighbours.length;                
+                const attr = e.target;
+                const countryId = attr.getAttribute("countryid");
+                let alreadyClicked = 0;                 // αποθηκεύω σε δύο πίνακες αν έχει ήδη πατηθεί η χώρα
+                r_tries.forEach(item => {
+                    if (item == countryId)  alreadyClicked = 1;
+                });
+                w_tries.forEach(item => {
+                    if (item == countryId)  alreadyClicked = 1;
+                });
+                if (countryId != null && !alreadyClicked) {
+                    const is3 = attr.getAttribute("is");        //  is 1 = είναι πραγματικός γείτονας
+                    if (is3 == 1) {
+                        c_skor += 5;
+                        r_tries.push(countryId);
+                        document.getElementById(countryId).style.border = "2px solid green";
+                    }
+                    else {                                      //  is 0 = είναι ψεύτικος γείτονας
+                        c_skor -= 3;
+                        w_tries.push(countryId);
+                        document.getElementById(countryId).style.border = "2px solid red";
+                    }
+
+                    let mbar = Math.round(r_tries.length/geitones * 100);      
+                    document.querySelector("#myBar").style.width = mbar + "%";
+                    refresh_score();
+                    if (r_tries.length == geitones) round_success();                                           
+                    if (w_tries.length == geitones) round_failure();
+                }
+            }
+
+            document.querySelector("#neighbours-panel").addEventListener("click",clickHandler);
+                        //  διαχειρίζεται τα "click" πάνω στις χώρες
+
+        });
+    </script>
+</head>
+
+<body>
+    <div class="game-panel">
+        <div id="sidebar" name="sidebar">Βρες τους γείτονες
+            <div id="score" name="score">
+                <div id="giros_lekt">Γύρος :</div>
+                <div id="giros" name="giros"></div><br>
+                <div id="skor_lekt">Σκόρ :</div>
+                <div id="skor" name="skor"></div>
+            </div>   
+        </div>
+        <div id="buttons-panel" name="buttons-panel">
+            <input type="button" id="btn-next-round" value="Επόμενη χώρα"></input>
+            <input type="button" id="btn-new-game" value="Νέο παιχνίδι"></input>               
+        </div>
+    
+        <div id="my-country" name="my-country">
+            <div id="my-country-flag" name="my-country-flag"></div>
+            <div id="my-country-name" name="my-country-name"></div>
+            <div id="myneigh" name="myneigh"></div>
+        </div>
+        <div id="progress" name="progress">
+                <div id="myBar"></div>
+        </div>       
+        <div id="neighbours-panel" name="neighbours-panel">          
+            <div id="next-round-panel" name="next-round-panel">
+                <div id="msg"></div>
+            </div>
+        </div>
+    </div>
+    <div id="infobox" class="infobox">Σίγουρα; Θα χάσετε όλο σας το σκόρ!
+            <button class="btns" onclick="MyCancel()">Cancel</button>
+            <button class="btns" onclick="MyNewGame()">OK</button>
+    </div>
+    <div id="infobox2"  class="infobox">Τέλος παιχνιδιού - Πατήστε το ΟΚ !!         
+        <button class="btns" onclick="MyNewGame()">OK</button>
+</div>
+    <div id="allScreen"></div>
+</body>
+<script>
+//Το παρακάτω αφορά μόνο τους χρήστες macOS.
+if (navigator.appVersion.indexOf("Macintosh")>0){
+  document.body.style.fontFamily = '"Open Sans"';
+}
+</script>
+</html>
