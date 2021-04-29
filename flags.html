@@ -130,6 +130,7 @@
                 let geitones = true_neighbours.length;                
                 const attr = e.target;
                 const countryId = attr.getAttribute("countryid");
+                document.getElementById(countryId).style.backgroundColor = "#eee";
                 let alreadyClicked = 0;                 // αποθηκεύω σε δύο πίνακες αν έχει ήδη πατηθεί η χώρα
                 r_tries.forEach(item => {
                     if (item == countryId)  alreadyClicked = 1;
@@ -139,19 +140,36 @@
                 });
                 if (countryId != null && !alreadyClicked) {
                     const is3 = attr.getAttribute("is");        //  is 1 = είναι πραγματικός γείτονας
+                    var sw=0;
                     if (is3 == 1) {
+                        sw =1;
                         c_skor += 5;
                         r_tries.push(countryId);
                         document.getElementById(countryId).style.border = "2px solid green";
                     }
                     else {                                      //  is 0 = είναι ψεύτικος γείτονας
+                        sw =0;
                         c_skor -= 3;
                         w_tries.push(countryId);
                         document.getElementById(countryId).style.border = "2px solid red";
                     }
 
-                    let mbar = Math.round(r_tries.length/geitones * 100);      
-                    document.querySelector("#myBar").style.width = mbar + "%";
+                    if (r_tries && sw) {
+                        let prev_mbar = Math.round((r_tries.length-1)/geitones * 100);
+                        let curr_mbar = Math.round(r_tries.length/geitones * 100);
+
+                        var mbar = prev_mbar;
+                        var id = setInterval(frame, 10);
+                        function frame() {
+                            if (mbar >= curr_mbar) {
+                                clearInterval(id);
+                            }
+                            else {
+                                mbar++;
+                                document.querySelector("#myBar").style.width = mbar + "%";
+                            }
+                        }
+                    }
                     refresh_score();
                     if (r_tries.length == geitones) round_success();                                           
                     if (w_tries.length == geitones) round_failure();
