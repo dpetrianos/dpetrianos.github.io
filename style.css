@@ -55,6 +55,7 @@ body {
 
 #my-country-flag {
     font-size: 3rem;
+    text-shadow: 0 0 5px wheat;
 }                         /*------------------------*/
 
 #my-country-name {
@@ -152,7 +153,7 @@ body {
     display: none;
 
     border-radius: 5px;
-    margin: 2px 2px 2px 2px;
+    margin: 0px 2px 0px 2px;
     padding : 0em 0em;
     
     opacity: 0.9;
