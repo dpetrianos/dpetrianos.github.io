@@ -60,17 +60,18 @@ function country2emoji2(country_code) {
 //     });   
 //   }      
 
-function loadCountryNameFromCode(code) {
+function loadCountryNameFromCode(code3) {
     for (var i=0; i< allCountries.length-1; i++) {
         if (code3 == allCountries[i]['alpha3Code']) {
             //found =1;
+            //console.log("!!!!!!!!" + code3 + "  " +allCountries[i]['name']);
             return(allCountries[i]['name']);
             //break;
         }
     }
 }
 
-function loadCountryCode2FromCode(code) {
+function loadCountryCode2FromCode(code3) {
     for (var i=0; i< allCountries.length-1; i++) {
         if (code3 == allCountries[i]['alpha3Code']) {
             //found =1;

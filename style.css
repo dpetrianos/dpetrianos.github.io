@@ -25,11 +25,133 @@ body {
 
 .game-panel {
     display: grid;                        /*------------------------*/
-    grid-template-columns: 10em 1fr ;       /*10em 1fr   sidebar*/ 
-    grid-template-rows: 5em 1fr;            /* 5em 1fr   my-country*/
+    grid-template-columns: 12em 1fr ;       /*10em 1fr   sidebar*/ 
+    grid-template-rows: 6em 1fr;            /* 5em 1fr   my-country*/
     background-color: aliceblue;
 }
 
+@media (min-width: 800px) {
+    #help-panel {
+        background-color: beige;
+        width: 30vw;
+        height: fit-content;
+        padding: 0 10px;
+    
+        position: absolute;
+        /* right: 90px; */
+        right: 170px;
+        top: 0;
+        border-radius:10px;
+        z-index: 110;
+    }
+
+    #help-panel::before {
+        content: "";
+        position: absolute;
+        /* width: 0;
+        height: 0; */
+        /* right: -42px;
+        top: 17px; */
+        left: 100%;
+        top: 25px; 
+        border: 10px solid transparent;
+        /* border-left: 32px solid rgb(193, 193, 193); */
+        border-left: 32px solid rgba(193, 193, 193, 0.5);
+        z-index: 111;
+    }
+    
+    #help-panel::after {
+        content: "";
+        position: absolute;
+        /* width: 0;
+        height: 0; */
+        /* right: -31px;
+        top: 19px; */
+        left: 100%;
+        top: 25px; 
+        border: 8px solid transparent;
+        border-left: 24px solid beige;
+        z-index: 112;
+    }
+
+    #tip-panel {
+        background-color: beige;
+        width: 30vw;
+        height: fit-content;
+        padding: 0 10px;
+    
+        position: absolute;
+        /* right: 90px; */
+        right: 230px;
+        top: 0;
+        border-radius:10px;
+        z-index: 110;
+    }
+
+    #tip-panel::before {
+        content: " ";
+        position: absolute;
+        /* width: 0;
+        height: 0; */
+        /* right: -42px;
+        top: 17px; */
+        left: 100%;
+        top: 25px; 
+        border: 10px solid transparent;
+        border-left: 32px solid rgb(193, 193, 193);
+        border-left: 32px solid rgba(193, 193, 193, 0.5);
+        z-index: 111;
+    }
+    
+    #tip-panel::after {
+        content: " ";
+        position: absolute;
+        /* width: 0;
+        height: 0; */
+        /* right: -31px; */
+        left: 100%;
+        top: 25px; 
+        border: 8px solid transparent;
+        border-left: 24px solid beige;
+        z-index: 112;
+    }
+
+    #tip {
+        /* flex: 0 1 auto; */
+        /* height: 30px;
+        padding:20px 0; */
+        height: 60px; 
+        padding:15px 5px; 
+    
+        /* text-shadow: 0 0 5px wheat; */
+        /* border: 1px dotted black; */
+    }
+
+    #tip-text {
+        font-size: 1rem;
+        padding: 30px 0 0 10px;
+    }
+    
+
+    #help {
+        height: 50px; 
+        margin: 20px 10px;
+        text-shadow: 0 0 5px wheat;
+        /* border: 1px dotted black; */
+    }
+
+    #settings {
+        height: 50px;
+        margin: 20px 10px;
+        height:3em;
+    
+        /* margin: 18px 0px;
+        height:45%; */
+        /* object-fit: cover; */
+        text-shadow: 0 0 5px wheat;
+        /* border: 1px dotted black; */
+    }
+}
 
 @media (max-width: 800px) {             /*------------------------*/
     /* body {
@@ -38,37 +160,286 @@ body {
     .game-panel {
         display: block;
     }
+
+    /* .game-panel {
+        grid-template-columns: auto;
+        grid-template-rows: 350px 70px 30px auto;
+    } */
+
+    #help-panel {
+        background-color: beige;
+        width: 45vw;
+        /* height: fit-content; */
+        padding: 0 10px;
+    
+        position: absolute;
+        /* right: 170px; */
+        right: 100px;
+        top: 0;
+        /* right: 90px; */
+        /* bottom: 0; */
+        z-index: 110;
+    }
+
+    #help-panel::before {
+        content: " ";
+        position: absolute;
+        width: 0;
+        height: 0;
+        /* right: -42px;
+        bottom: 17px; */
+        left: 100%;
+        top: 30px; 
+        border: 10px solid transparent;
+        border-left: 32px solid rgb(193, 193, 193);
+        border-left: 32px solid rgba(193, 193, 193, 0.5);
+        z-index: 11;
+    }
+    
+    #help-panel::after {
+        content: " ";
+        position: absolute;
+        width: 0;
+        height: 0;
+        /* right: -31px;
+        bottom: 19px; */
+        left: 100%;
+        top: 30px; 
+        border: 8px solid transparent;
+        border-left: 24px solid beige;
+        z-index: 12;
+    }
+
+    #tip-panel {
+        background-color: beige;
+        width: 35vw;
+        height: fit-content;
+        padding: 0 10px;
+    
+        position: absolute;
+        /* right: 90px; */
+        right: 140px;
+        top: 0;
+        border-radius:10px;
+        z-index: 110;
+    }
+
+    #tip-panel::before {
+        content: " ";
+        position: absolute;
+        /* width: 0;
+        height: 0; */
+        /* right: -42px;
+        top: 17px; */
+        left: 100%;
+        top: 30px; 
+        border: 10px solid transparent;
+        border-left: 32px solid rgb(193, 193, 193);
+        border-left: 32px solid rgba(193, 193, 193, 0.5);
+        z-index: 111;
+    }
+    
+    #tip-panel::after {
+        content: " ";
+        position: absolute;
+        /* width: 0;
+        height: 0; */
+        /* right: -31px; */
+        left: 100%;
+        top: 30px; 
+        border: 8px solid transparent;
+        border-left: 24px solid beige;
+        z-index: 112;
+    }
+
+    #tip {
+        /* flex: 0 1 auto; */
+        /* height: 30px; */
+        font-size: 2em;
+        height: 1.5em;
+        margin-top: 25px;
+        /* padding: 35px 0; */
+        /* height: 50px; */
+        /* padding:10px; */
+    
+        /* text-shadow: 0 0 5px wheat; */
+        /* border: 1px dotted black; */
+    }
+
+    #tip-text {
+        font-size: 0.7rem;
+        padding: 20px 0px 0px 0px;
+    }
+
+    #help {
+        margin: 17px 0px 0px 0px;
+        /* height: 50%; */
+        padding: 15px 5px 0px 0px;
+        height: 2em;;
+        text-shadow: 0 0 5px wheat;
+        /* border: 1px dotted black; */
+    }
+
+    #settings {
+        /* margin: 10px 10px;*/
+        padding: 30px 0;
+        height:2em; 
+    
+        /* margin: 18px 0px; */
+        /* height:45%; */
+        /* object-fit: cover; */
+        text-shadow: 0 0 5px wheat;
+        /* border: 1px dotted black; */
+    }
+
+    #my_country {
+        height:1em;
+    }
+    #my-country-flag {
+        margin-top: 0px;
+        height: 1.2em;
+        text-align:start;
+    }
+
+    #my-country-name {
+        margin-top: 5px;
+        height: 2em;
+        flex-wrap: wrap;
+    }
 }
 
 
 #my-country {                           /*------------------------*/
     grid-row: 1 / 1;
     position: relative;
-    display: flex;
-    flex-wrap: wrap;    
-    align-content:center;
+    display: flex; 
+    /* flex: 1 0 auto; */
+                                /* display:flow-root; */
+    /* flex-wrap: wrap;     */
+    /* align-content:center; */
     background-color:lightslategrey;
-    padding: 0.5em;
+    padding: 0em 0.5em;
     border-radius: 5px;
     margin:5px 5px 3px 5px;
+    /* border: 1px dotted black; */
 }
 
 #my-country-flag {
-    font-size: 3rem;
+    font-size: 4rem;
+    /* padding: 0em 0.2em 0em 0.2em; */
+    padding: 0px 10px 0px 10px;
+    /* height: 3em; */
     text-shadow: 0 0 5px wheat;
+    /* border: 1px dotted black; */
 }                         /*------------------------*/
 
 #my-country-name {
     color: white;
     font-size: 1rem;
-    padding: 20px 0 0 20px;
+    padding: 30px 5px 5px 5px;
+    /* flex: 1 0 auto; */
+    /* text-align:center;
+    text-align:start; */
+    /* border: 1px dotted black; */
 }
+
+#tip-text {
+    flex: 1 1 auto;
+    color: white;
+    /* font-size: 1rem; */
+    /* padding: 30px 0 0 10px; */
+    /* border: 2px dotted black; */
+}
+
+/*#tip {*/
+    /* flex: 0 1 auto; */
+    /* height: 30px;
+    padding:20px 0; */
+    /* height: 50px; 
+    padding:10px;  */
+
+    /* text-shadow: 0 0 5px wheat; */
+    /* border: 1px dotted black; */
+/*}*/
+
+/* #tip:hover {
+    font-size: 0.7em;
+    background-color: red;
+} */
+
+#tip-panel {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#tip-panel.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+#tip-panel.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+#tip-panel > p {
+    font-size: 0.9em;
+}
+
+/* #help {
+    margin: 17px 10px;
+    height: 50%;
+    text-shadow: 0 0 5px wheat;
+    border: 1px dotted black;
+} */
+
+/* #help-container {
+    position: relative;
+    margin-left: 50px;
+    
+    flex: 1 1 auto;
+    border: 2px dotted black;
+} */
+
+#help-panel {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#help-panel.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+#help-panel.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+#help-panel > p {
+    font-size: 0.7em;
+}
+
+/* #settings {
+    /* margin: 10px 10px;
+    height:3em; */
+
+    /* margin: 18px 0px;
+    height:45%; */
+    /* object-fit: cover; */
+    /* text-shadow: 0 0 5px wheat; */
+    /* border: 1px dotted black; */
+/*} */
 
 #sidebar {                                  /*------------------------*/
     grid-row: 1 / 4;        
     display:flow-root;
     background-color:deeppink;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: white;
     top: 20px;
     padding: 2em 0.6em;
@@ -79,8 +450,9 @@ body {
 #score>div {
     position: relative;
     top: 0.8em;
-    font-size: 1em;
-    color:lightgray;
+    font-size: 0.8em;
+    color:white;
+    /* color:lightgray; */
 }
 
 #giros_lekt, #skor_lekt {
@@ -107,37 +479,52 @@ body {
     position: relative;
     display: flex;
     flex-wrap: wrap;    
+    flex-grow: 1;
+    /* flex-grow: 1 0; */
     justify-content: space-between;
     border-radius: 5px;
     margin: 3px 3px 3px 3px;
     background-color:  #fff;
+    /* gap:1em; */
 }
 
 .neighbour {                                /*------------------------*/
     display:flex;
+    /* flex: 1 0 auto; */
     flex-direction:column;           /* ο κύριος άξονας είναι κάθετα */
     justify-content:space-between;   /* Στοίχιση στοιχείων στον κύριο άξονα που είναι τώρα ο κάθετος*/
     flex-grow: 1;                    /* για να ανοίγουν οι χώρες της τελευταίας σειράς */
-    width: 5rem;
-    margin: 15px 4px;
+    width: 9.5rem;
+    height: 13rem;
+    margin: 10px 12px;
     border-radius: 5px;
+    /* border: 1px solid black; */
 }
 
 .n_flag {                           /*  neighbour  flag */
-    font-size: 4rem;
+    font-size: 5.5rem;
     text-align:center;
+    /* margin: 15px 15px 15px 15px; */
     /* box-shadow: 1px 1px 15px 1px #bbb;  */
+    padding-top:15px;
     text-shadow: 0 0 5px #444;
+    /* text-shadow: 0 0 5px black; */
     border-radius: 5px;
+    /* border: 1px solid black; */
 }
 
 .n_name {                           /*  neighbour  name */
-    font-size: 0.8rem;
+    font-size: 1rem;
     text-align:center;
+    padding: 5px 5px 15px 5px;
+    /* border: 1px solid black; */
  }
 
 .neighbour:hover {
     cursor:pointer;
+    /* border:2px solid rgb(80, 80, 80, 0.4);*/
+    box-shadow: 0px 0px 5px 1px #bbb;
+    background-color:  #fff; 
 }
 
 
@@ -263,6 +650,7 @@ body {
     width: 0%;
     height: 20px; 
     background-color:RoyalBlue;
+    border-radius: 5px;
     }
 
 /* ειδικά για τους φυλλομετρητές που προέρχονται από τον chrome καθώς 

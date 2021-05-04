@@ -34,13 +34,23 @@
         let mycode ;
         let r_tries = [];
         let w_tries = [];
-        
+        let helpPanelElement = null;
+        let tipPanelElement = null;
+        let help_x = 0;
+        let helpy = 0;
+        let tip = ["img/bulboff.gif","img/bulbon.gif"];
          
         function refresh_score() {            
             const divgiros = document.querySelector("#giros");
             const divskor = document.querySelector("#skor");
             divgiros.innerHTML = `${c_giros}`;
             divskor.innerHTML = `${c_skor}`;
+            if (c_skor >= 5) {
+                document.querySelector('#tip').src = tip[1];
+            } else {
+                document.querySelector('#tip').src = tip[0];
+            }
+
         }
 
         function fetch_mycountry() {
@@ -74,7 +84,13 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             //start a new Game  
-
+            tipPanelElement = document.querySelector("#tip-panel");
+            helpPanelElement = document.querySelector("#help-panel");
+            help_x = document.querySelector("#help").x;
+            help_y = document.querySelector("#help").y;
+            // helpPanelElement.x = help_x;
+            console.log("helpPanelElement.x :" + helpPanelElement.x);
+            console.log("help_x: " + help_x);
             c_giros = 1;
             c_skor = 0;
 
@@ -109,7 +125,7 @@
             function round_success() {
                 document.querySelector("#next-round-panel").style.display = "flex";
                 const info = document.querySelector("#msg");
-                info.textContent = "Τους βρήκατε όλους!";
+                info.textContent = "Συγχαρητήρια! Βρήκατε όλους τους γείτονες!";
                 info.style.display = "flex";
                 info.style.color = "black";
                 document.querySelector("#btn-next-round").disabled = false;
@@ -119,7 +135,7 @@
             function round_failure(e) {
                 document.querySelector("#next-round-panel").style.display = "flex";
                 const info = document.querySelector("#msg");
-                info.textContent = "Kρίμα χάσατε!";
+                info.textContent = "Κρίμα, σε αυτόν τον γύρο έχασες.";
                 info.style.display = "flex";
                 info.style.color = "darkred"; 
                 document.querySelector("#btn-next-round").disabled = false;
@@ -127,10 +143,12 @@
             }
 
             function clickHandler(e) {
+                document.querySelector('#tip-text').innerHTML = "";
                 let geitones = true_neighbours.length;                
                 const attr = e.target;
                 const countryId = attr.getAttribute("countryid");
                 document.getElementById(countryId).style.backgroundColor = "#eee";
+                document.getElementById(countryId).style.boxShadow= "0px 0px 5px 1px #bbb";
                 let alreadyClicked = 0;                 // αποθηκεύω σε δύο πίνακες αν έχει ήδη πατηθεί η χώρα
                 r_tries.forEach(item => {
                     if (item == countryId)  alreadyClicked = 1;
@@ -179,6 +197,61 @@
             document.querySelector("#neighbours-panel").addEventListener("click",clickHandler);
                         //  διαχειρίζεται τα "click" πάνω στις χώρες
 
+            document.querySelector("#tip").addEventListener('click', () => {
+                        //  διαχειρίζεται τα "click" πάνω στo tip 
+                    // function switch_tip() {
+                        if (c_skor >= 5) {
+                            // document.querySelector('#tip').src = tip[1];
+                            console.log(r_tries,true_neighbours);
+                            for (let i=0; i < true_neighbours.length; i++){
+                                let sw=0;
+                                for (let j=0; j < r_tries.length; j++){
+                                    if (true_neighbours[i] == r_tries[j]) sw=1; 
+                                }
+                                if (sw==0) {
+                                    //document.querySelector('#tip-text').innerHTML = "Το πρώτο γράμμα είναι : " + loadCountryNameFromCode(true_neighbours[i]);
+                                    if (document.querySelector('#tip-text').innerHTML == "")  c_skor -= 5;
+                                    document.querySelector('#tip-text').innerHTML = "Το πρώτο γράμμα είναι : " + loadCountryNameFromCode(true_neighbours[i])[0];
+                                    break;
+                                }
+                            }
+                            //document.querySelector('#tip-text').innerHTML = "Το πρώτο γράμμα είναι : ";
+                        }
+                        else {
+                            // document.querySelector('#tip').src = tip[0];
+                        }
+                        refresh_score();
+                        // document.querySelector("#tip").removeEventListener();
+                    // }
+            });
+
+            document.querySelector("#tip").addEventListener("mouseover", () => {
+                if (c_skor < 5) {
+                    if (tipPanelElement.classList.contains("hidden")) {
+                        tipPanelElement.classList.remove("hidden");
+                    }
+                    tipPanelElement.classList.add("visible");
+                }
+            });
+
+            document.querySelector("#tip").addEventListener("mouseout", () => {
+                if (c_skor < 5) {
+                    tipPanelElement.classList.remove("visible");
+                    tipPanelElement.classList.add("hidden");
+                }
+            });
+
+            document.querySelector("#help").addEventListener("mouseover", () => {
+                if (helpPanelElement.classList.contains("hidden")) {
+                    helpPanelElement.classList.remove("hidden");
+                }
+                helpPanelElement.classList.add("visible");
+            });
+
+            document.querySelector("#help").addEventListener("mouseout", () => {
+                helpPanelElement.classList.remove("visible");
+                helpPanelElement.classList.add("hidden");
+            });
         });
     </script>
 </head>
@@ -201,7 +274,27 @@
         <div id="my-country" name="my-country">
             <div id="my-country-flag" name="my-country-flag"></div>
             <div id="my-country-name" name="my-country-name"></div>
-            <div id="myneigh" name="myneigh"></div>
+            <!-- <div id="myneigh" name="myneigh"></div> -->
+            <div id="tip-text" name="tip-text"></div>
+            <img id="tip" src="img/bulboff.gif" alt="βοήθεια">
+            <div id="tip-panel">
+                <h4>Βοήθεια παιχνιδιού</h4>
+                <p> Η βοήθεια είναι διαθέσιμη (αναμμένη λάμπα), μόνο όταν το σκορ σου είναι μεγαλύτερο από 5 πόντους.</p>
+            </div>
+            <!-- <div id="help-container"> -->
+                <img id="help" src="img/info.png" alt="Οδηγίες παιχνιδιού" height="50px">
+                <div id="help-panel">
+                    <h4>Οδηγίες παιχνιδιού</h4>
+                    <p>Καλωσήρθες στο παιχνίδι "Βρες τους γείτονες"!<br>  
+                        Η χώρα που παίζει σε κάθε γύρο φαίνεται πάνω αριστερά. Για κάθε σωστή απάντηση κερδίζεις 5 πόντους  
+                        και χάνεις 3 πόντους αν είναι λανθασμένη. Ένας γύρος θεωρείται κερδισμένος, όταν βρεις όλους τους γείτονες της χώρας, 
+                        ενώ θεωρείται χαμένος αν κάνεις τόσα λάθη, όσοι είναι και οι σωστοί γείτονες της χώρας. Στο τέλος κάθε γύρου, 
+                        πάτησε το κουμπί "Επόμενη χώρα", για να περάσεις στον επόμενο γύρο.<br> Με κάθε χρήση της βοήθειας, 
+                        χάνεις 5 πόντους<br> 
+                        Καλή διασκέδαση!<br>Σημείωση: Για καλύτερη εμπειρία χρήσης, ενεργοποίησε τα cookies!</p>
+                </div>
+            <!-- </div> -->
+            <img id="settings" src="img/settings.png" alt="ρυθμίσεις">
         </div>
         <div id="progress" name="progress">
                 <div id="myBar"></div>
