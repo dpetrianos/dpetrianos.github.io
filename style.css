@@ -599,9 +599,9 @@ body {
 }
 
 .btns {
-    border: 1px dotted black;
-    display:flow;
-    flex-wrap: wrap;
+    /* border: 1px dotted black; */
+    /* display:flex; */
+    /* flex-wrap: wrap; */
     width: 40%;
     border: 1px solid black;
  
